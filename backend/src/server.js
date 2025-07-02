@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 5001;
 app.use(express.json());
 app.use("/api/habits", habitsRoutes);
 
-app.listen(5001, () => {
-  console.log("Server started on PORT: 5001");
+app.listen(PORT, () => {
+  console.log(`Server started on PORT: ${PORT}`);
 });
 
 connectDB();

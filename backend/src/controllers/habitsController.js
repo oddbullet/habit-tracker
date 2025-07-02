@@ -74,7 +74,7 @@ export async function updateHabitCompleteDate(req, res) {
     }
     res.status(200).json(updateHabit);
   } catch (error) {
-    console.error("Error in updateHabitTitle", error);
+    console.error("Error in updateHabitCompleteDate", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
@@ -85,6 +85,7 @@ export async function deleteHabit(req, res) {
     if (!deleteHabit) {
       return res.status(404).json({ message: "Habit not found" });
     }
+    return res.status(200).json({ message: "Habit deleted" });
   } catch (error) {
     console.error("Error in deleteHabit controller", error);
     res.status(500).json({ message: "Internal server error" });

@@ -1,25 +1,25 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const habitSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   start_date: {
     type: String,
-    require: true,
+    required: true,
   },
   completed_dates: {
-    type: [],
-    require: true,
+    type: [String],
+    required: true,
   },
   streak: {
     type: Number,
-    require: true,
+    required: true,
   },
   goal_per_week: {
     type: Number,
-    require: true,
+    required: true,
   },
 });
 
