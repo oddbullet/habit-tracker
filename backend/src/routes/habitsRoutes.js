@@ -13,6 +13,6 @@ router.get("/", getAllHabits);
 router.post("/", createHabit);
 router.put("/title/:id", updateHabitTitle);
 router.put("/date/:id", updateHabitCompleteDate);
-router.delete("/:id", deleteHabit);
+router.delete("/delete/:id", deleteHabit);
 
 export default router;
