@@ -2,6 +2,11 @@ import User from "../models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+/**
+ * @description Register a user account.
+ * @route POST api/user
+ * @access Public
+ */
 export async function registerUser(req, res) {
   try {
     const { email, password } = req.body;
@@ -34,6 +39,11 @@ export async function registerUser(req, res) {
   }
 }
 
+/**
+ * @description Authenticate a user account.
+ * @route POST api/user/login
+ * @access Public
+ */
 export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;

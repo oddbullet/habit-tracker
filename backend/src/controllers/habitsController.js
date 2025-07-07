@@ -1,5 +1,6 @@
 import Habit from "../models/Habit.js";
 
+// Format YYYY-MM-DD
 function getLocalDate() {
   const date = new Date();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -9,9 +10,16 @@ function getLocalDate() {
     .padStart(2, "0")}`;
 }
 
-export async function getAllHabits(_, res) {
+function checkUser() {}
+
+/**
+ * @description Get all user habits
+ * @route GET api/habits
+ * @access Private
+ */
+export async function getAllHabits(req, res) {
   try {
-    const habits = await Habit.find().sort({ createdAt: -1 });
+    const habits = await Habit.find({ user: req.user.id });
     res.status(200).json(habits);
   } catch (error) {
     console.error("Error in getAllHabit controller", error);
@@ -19,11 +27,17 @@ export async function getAllHabits(_, res) {
   }
 }
 
+/**
+ * @description Create habit
+ * @route POST api/habits
+ * @access Private
+ */
 export async function createHabit(req, res) {
   try {
-    const { title, goal_per_week } = req.body;
+    const { user, title, goal_per_week } = req.body;
     const start_date = getLocalDate();
     const habit = new Habit({
+      user,
       title,
       start_date,
       completed_dates: [],
@@ -39,6 +53,11 @@ export async function createHabit(req, res) {
   }
 }
 
+/**
+ * @description Update the habit title
+ * @route PUT api/habits/title/:id
+ * @access Private
+ */
 export async function updateHabitTitle(req, res) {
   try {
     const { title } = req.body;
@@ -58,6 +77,11 @@ export async function updateHabitTitle(req, res) {
   }
 }
 
+/**
+ * @description Update the habit completion status
+ * @route PUT api/habits/date/:id
+ * @access Private
+ */
 export async function updateHabitCompleteDate(req, res) {
   try {
     const { date } = req.body;
@@ -79,6 +103,11 @@ export async function updateHabitCompleteDate(req, res) {
   }
 }
 
+/**
+ * @description Delete the habit
+ * @route DELETE api/habits/delete/:id
+ * @access Private
+ */
 export async function deleteHabit(req, res) {
   try {
     const deleteHabit = await Habit.findByIdAndDelete(req.params.id);
