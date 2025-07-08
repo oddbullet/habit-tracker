@@ -10,7 +10,17 @@ function getLocalDate() {
     .padStart(2, "0")}`;
 }
 
-function checkUser() {}
+function checkAuth(req, habit) {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  if (habit.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+}
 
 /**
  * @description Get all user habits
@@ -34,10 +44,10 @@ export async function getAllHabits(req, res) {
  */
 export async function createHabit(req, res) {
   try {
-    const { user, title, goal_per_week } = req.body;
+    const { title, goal_per_week } = req.body;
     const start_date = getLocalDate();
     const habit = new Habit({
-      user,
+      user: req.user.id,
       title,
       start_date,
       completed_dates: [],
@@ -61,6 +71,9 @@ export async function createHabit(req, res) {
 export async function updateHabitTitle(req, res) {
   try {
     const { title } = req.body;
+
+    checkAuth(req, await Habit.findById(req.params.id));
+
     const updateHabit = await Habit.findByIdAndUpdate(
       req.params.id,
       { title },
@@ -85,6 +98,9 @@ export async function updateHabitTitle(req, res) {
 export async function updateHabitCompleteDate(req, res) {
   try {
     const { date } = req.body;
+
+    checkAuth(req, await Habit.findById(req.params.id));
+
     const updateHabit = await Habit.findByIdAndUpdate(
       req.params.id,
       {
@@ -110,7 +126,10 @@ export async function updateHabitCompleteDate(req, res) {
  */
 export async function deleteHabit(req, res) {
   try {
+    checkAuth(req, await Habit.findById(req.params.id));
+
     const deleteHabit = await Habit.findByIdAndDelete(req.params.id);
+
     if (!deleteHabit) {
       return res.status(404).json({ message: "Habit not found" });
     }

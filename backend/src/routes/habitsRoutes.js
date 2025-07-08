@@ -6,8 +6,10 @@ import {
   updateHabitCompleteDate,
   deleteHabit,
 } from "../controllers/habitsController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+router.use(authMiddleware);
 
 router.get("/", getAllHabits);
 router.post("/", createHabit);
