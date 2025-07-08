@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -35,7 +35,9 @@ export async function registerUser(req, res) {
       .json({ id: user.id, email: user.email, token: generateToken(user.id) });
   } catch (error) {
     console.log("Error in registerUser controller", error);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 }
 
@@ -60,7 +62,9 @@ export async function loginUser(req, res) {
     }
   } catch (error) {
     console.log("Error in loginUser controller", error);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 }
 
