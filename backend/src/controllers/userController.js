@@ -70,6 +70,21 @@ export async function loginUser(req, res) {
 
 export async function signOutUser(params) {}
 
+/**
+ * @description Get user Data
+ * @route Get api/user/me
+ * @access Private
+ */
+export async function getMe(req, res) {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+}
+
 function generateToken(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "7d",
