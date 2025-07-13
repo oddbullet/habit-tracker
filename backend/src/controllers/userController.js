@@ -12,13 +12,13 @@ export async function registerUser(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Please enter all field" });
+      return res.status(400).json({ message: "Please enter all fields" });
     }
 
     const userExist = await User.findOne({ email });
 
     if (userExist) {
-      return res.status(400).json({ message: "User already exist" });
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const salt = await bcrypt.genSalt(10);

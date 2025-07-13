@@ -12,8 +12,13 @@ function getLocalDate() {
 
 function checkAuth(req, habit) {
   if (!req.user) {
-    res.status(401);
+    res.status(404);
     throw new Error("User not found");
+  }
+
+  if (!habit) {
+    res.status(404);
+    throw new Error("Habit not found");
   }
 
   if (habit.user.toString() !== req.user.id) {
