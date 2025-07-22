@@ -5,10 +5,6 @@ const API_URL = "/user/";
 async function register(userData) {
   const response = await api.post(API_URL + "register", userData);
 
-  if (response.data) {
-    localStorage.setItem("user", JSON.stringify(response.data));
-  }
-
   return response.data;
 }
 
@@ -16,7 +12,7 @@ async function login(userData) {
   const response = await api.post(API_URL + "login", userData);
 
   if (response.data) {
-    localStorage.setItem("user".JSON.stringify(response.data));
+    localStorage.setItem("user", JSON.stringify(response.data));
   }
 
   return response.data;

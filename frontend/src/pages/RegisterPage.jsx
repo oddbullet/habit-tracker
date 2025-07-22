@@ -1,10 +1,10 @@
 import { Button, Box, Card, Text, TextField, Spinner } from "@radix-ui/themes";
 import { Label } from "radix-ui";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router";
-import HeaderBar from "../components/HeaderBar";
+import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { reset, register } from "../features/auth/authSlice";
+import HeaderBar from "../components/HeaderBar";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({

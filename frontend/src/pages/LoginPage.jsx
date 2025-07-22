@@ -1,8 +1,64 @@
-import { Button, Box, Card, Text, TextField } from "@radix-ui/themes";
+import { Button, Box, Card, Text, TextField, Spinner } from "@radix-ui/themes";
+import { useEffect, useState } from "react";
 import { Label } from "radix-ui";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { reset, login } from "../features/auth/authSlice";
 import HeaderBar from "../components/HeaderBar";
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (isSuccess) {
+      navigate("/home");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  function handleChange(e) {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+
+    const userData = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    dispatch(login(userData));
+  }
+
+  if (isLoading) {
+    return (
+      <div className="auth-page">
+        <div className="main-content">
+          <Spinner size="3" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="auth-page">
       <HeaderBar></HeaderBar>
@@ -10,7 +66,7 @@ export default function Login() {
       <div className="main-content">
         <Box>
           <Card className="auth-card">
-            <form className="auth-form">
+            <form className="auth-form" onSubmit={onSubmit}>
               <Text
                 as="p"
                 weight="bold"
@@ -26,6 +82,8 @@ export default function Login() {
               <TextField.Root
                 placeholder="example@example.com"
                 id="emailField"
+                name="email"
+                onChange={handleChange}
               ></TextField.Root>
 
               <Label.Root className="form-label" htmlFor="passwordField">
@@ -34,6 +92,8 @@ export default function Login() {
               <TextField.Root
                 type="password"
                 id="passwordField"
+                name="password"
+                onChange={handleChange}
               ></TextField.Root>
 
               <Button
@@ -41,6 +101,7 @@ export default function Login() {
                 variant="solid"
                 highContrast
                 style={{ margin: "0.5rem 0 0.5rem 0" }}
+                type="submit"
               >
                 Sign In
               </Button>
@@ -49,6 +110,7 @@ export default function Login() {
                 variant="soft"
                 highContrast
                 style={{ margin: "0 0 0.5rem 0" }}
+                onClick={() => navigate("/register")}
               >
                 Don't have an account? Sign Up
               </Button>
