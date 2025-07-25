@@ -8,6 +8,8 @@
   font-weight: 500;
 }
 
+/* Login and Register Page */
+
 .auth-page {
   width: 100vw;
   height: 100vh;
@@ -34,4 +36,25 @@
   flex-direction: column;
   align-items: stretch;
   gap: 0.5rem;
+}
+
+/* Habit Page */
+.habit-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.habit-content {
+  margin: 0 20% 0 20%;
+}
+
+.habit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.habit-btn-group {
+  display: flex;
+  gap: 0.3rem;
 }
