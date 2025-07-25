@@ -1,0 +1,60 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+/* Login and Register Page */
+
+.auth-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  padding: 1rem;
+  box-shadow: var(--shadow-4);
+  min-width: 20rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+/* Habit Page */
+.habit-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.habit-content {
+  margin: 0 20% 0 20%;
+}
+
+.habit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.habit-btn-group {
+  display: flex;
+  gap: 0.3rem;
+}
