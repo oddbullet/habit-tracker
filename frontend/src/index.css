@@ -8,6 +8,10 @@
   font-weight: 500;
 }
 
+.radix-themes {
+  --cursor-button: pointer;
+}
+
 /* Login and Register Page */
 
 .auth-page {
@@ -15,7 +19,6 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
 
 .main-content {
@@ -45,7 +48,15 @@
 }
 
 .habit-content {
-  margin: 0 20% 0 20%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 800px;
+}
+
+.habit-new-btn {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 1rem 0;
 }
 
 .habit {
@@ -54,7 +65,71 @@
   justify-content: space-between;
 }
 
+.habit-week-group {
+  display: flex;
+  gap: 2px;
+}
+
+.habit-card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.week-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 12px;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
 .habit-btn-group {
   display: flex;
   gap: 0.3rem;
+}
+
+/* New Habit Page */
+
+.new-habit-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-habit-card {
+  box-shadow: var(--shadow-4);
+}
+
+.new-habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.color-block {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.3rem 0;
+  border-radius: 5px;
+}
+
+.new-habit-btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 0 0;
+}
+
+@media (max-width: 420px) {
+  .habit-content {
+    margin: 2px;
+    padding: 0;
+  }
 }
