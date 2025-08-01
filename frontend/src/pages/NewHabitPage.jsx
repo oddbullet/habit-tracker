@@ -25,11 +25,9 @@ export default function NewHabitPage() {
       console.log(message);
     }
 
-    if (isSuccess) {
+    if (isSuccess && formData.title !== "") {
       navigate("/habit");
     }
-
-    dispatch(reset());
   }, [isError, isSuccess, message, navigate, dispatch]);
 
   function handleChange(e) {

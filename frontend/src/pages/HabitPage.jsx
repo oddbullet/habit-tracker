@@ -1,4 +1,9 @@
 import { Button } from "@radix-ui/themes";
+import { PlusIcon } from "@radix-ui/react-icons";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getHabit, reset } from "../features/habits/habitSlice";
 import HeaderBar from "../components/HeaderBar";
 import Habit from "../components/Habit";
 
@@ -13,11 +18,55 @@ const Week = Object.freeze({
 });
 
 export default function HabitPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+  const { habits, isLoading, isError, message } = useSelector(
+    (state) => state.habit
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (!user) {
+      navigate("/login");
+    }
+
+    dispatch(getHabit());
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
+
   return (
     <div className="habit-page">
       <HeaderBar />
       <div className="habit-content">
-        <Habit title={"LeetCode"} week={[Week.SUNDAY, Week.MONDAY]} />
+        <div className="habit-new-btn">
+          <Button
+            color="gray"
+            variant="solid"
+            highContrast
+            className="btn"
+            onClick={() => navigate("/new")}
+          >
+            <PlusIcon /> New Habit
+          </Button>
+        </div>
+
+        <div className="habit-card-group">
+          {habits.length > 0 ? (
+            habits.map((habit) => (
+              <Habit key={habit._id} title={habit.title}></Habit>
+            ))
+          ) : (
+            <p>No Habit</p>
+          )}
+        </div>
       </div>
     </div>
   );
