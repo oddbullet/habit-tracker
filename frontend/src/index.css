@@ -8,6 +8,34 @@
   font-weight: 500;
 }
 
+.radix-themes {
+  --cursor-button: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.logout-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 5px 0 5px 0;
+  width: 36px;
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #e9e7e7;
+}
+
 /* Login and Register Page */
 
 .auth-page {
@@ -15,7 +43,6 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
 
 .main-content {
@@ -45,16 +72,147 @@
 }
 
 .habit-content {
-  margin: 0 20% 0 20%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 800px;
+}
+
+.habit-new-btn {
+  display: flex;
+  margin: 1rem 0 1rem 0;
 }
 
 .habit {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  min-width: 200px;
+}
+
+.habit-week-group {
+  display: flex;
+  gap: 2px;
+}
+
+.habit-card-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  gap: 1rem;
+}
+
+.week-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 12px;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .habit-btn-group {
   display: flex;
   gap: 0.3rem;
+}
+
+/* New Habit Page */
+
+.new-habit-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-habit-card {
+  box-shadow: var(--shadow-4);
+}
+
+.new-habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.color-block {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.3rem 0;
+  border-radius: 5px;
+}
+
+.new-habit-btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 0 0;
+}
+
+/* Stat Page */
+.stat-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.stat-content {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 800px;
+}
+
+.stat-topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.stat-btn {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.first-stat {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.current-streak {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  min-height: 175px;
+}
+
+.longest-streak {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  min-height: 175px;
+}
+
+.completion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  max-height: 175px;
+}
+
+@media (max-width: 420px) {
+  .habit-content {
+    margin: 2px;
+    padding: 0;
+  }
 }

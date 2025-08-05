@@ -25,7 +25,7 @@ export default function Login() {
     }
 
     if (isSuccess) {
-      navigate("/home");
+      navigate("/habit");
     }
 
     dispatch(reset());

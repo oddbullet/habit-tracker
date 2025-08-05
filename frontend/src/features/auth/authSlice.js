@@ -4,7 +4,7 @@ import authService from "./authService";
 const user = JSON.parse(localStorage.getItem("user"));
 
 export const initialState = {
-  user: user ? user : null,
+  user: user ? user : "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -89,10 +89,10 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.user = null;
+        state.user = "";
       })
       .addCase(logout.fulfilled, (state) => {
-        state.user = null;
+        state.user = "";
       });
   },
 });
