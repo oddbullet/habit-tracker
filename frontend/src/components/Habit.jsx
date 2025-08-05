@@ -1,9 +1,39 @@
 import { Box, Button, Card, IconButton, Text } from "@radix-ui/themes";
 import { CheckIcon } from "@radix-ui/react-icons";
+import { formatISO } from "date-fns";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { updateHabitCompleteDate } from "../features/habits/habitSlice";
 
 export default function Habit({ title, habitId }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { habits } = useSelector((state) => state.habit);
+
+  const [clickState, setClickState] = useState("outline");
+
+  function handleClick(e) {
+    e.preventDefault();
+
+    const today = formatISO(new Date(), { representation: "date" });
+    const habitData = { date: today, id: habitId };
+    dispatch(updateHabitCompleteDate(habitData));
+  }
+
+  useEffect(() => {
+    const habitData = habits.find((habit) => habit._id === habitId);
+
+    if (
+      habitData &&
+      habitData.completed_dates[habitData.completed_dates.length - 1] ===
+        formatISO(new Date(), { representation: "date" })
+    ) {
+      setClickState("solid");
+      console.log(clickState);
+    }
+  }, [habits]);
 
   return (
     <Box>
@@ -28,7 +58,12 @@ export default function Habit({ title, habitId }) {
             </div> */}
           </div>
           <div className="habit-btn-group">
-            <IconButton variant="outline" radius="full" highContrast>
+            <IconButton
+              variant={clickState}
+              radius="full"
+              highContrast
+              onClick={handleClick}
+            >
               <CheckIcon width={"20px"} height={"20px"} />
             </IconButton>
           </div>

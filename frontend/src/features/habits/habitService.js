@@ -49,7 +49,11 @@ async function updateHabitCompleteDate(newDate, habitId, token) {
     },
   };
 
-  const response = await api.put(API_URL + "date/" + habitId, newDate, config);
+  const response = await api.put(
+    API_URL + "date/" + habitId,
+    { date: newDate },
+    config
+  );
 
   return response.data;
 }

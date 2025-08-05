@@ -65,10 +65,10 @@ export const updateHabitTitle = createAsyncThunk(
 
 export const updateHabitCompleteDate = createAsyncThunk(
   "habit/updateCompleteDate",
-  async (date, habitId, thunkAPI) => {
+  async ({ date, id }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await habitService.updateHabitCompleteDate(date, habitId, token);
+      return await habitService.updateHabitCompleteDate(date, id, token);
     } catch (error) {
       const message =
         (error.response &&
