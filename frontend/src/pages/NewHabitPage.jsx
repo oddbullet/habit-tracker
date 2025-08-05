@@ -16,11 +16,17 @@ export default function NewHabitPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.auth);
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.habit
   );
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     if (isError) {
       console.log(message);
     }

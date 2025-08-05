@@ -28,12 +28,13 @@ export default function HabitPage() {
   );
 
   useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
-
     if (!user) {
       navigate("/login");
+      return;
+    }
+
+    if (isError) {
+      console.log(message);
     }
 
     dispatch(getHabit());
