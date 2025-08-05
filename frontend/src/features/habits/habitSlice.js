@@ -49,7 +49,7 @@ export const updateHabitTitle = createAsyncThunk(
   "habit/updateTitle",
   async (title, habitId, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.token;
+      const token = thunkAPI.getState().auth.user.token;
       return await habitService.updateHabitTitle(title, habitId, token);
     } catch (error) {
       const message =
@@ -67,7 +67,7 @@ export const updateHabitCompleteDate = createAsyncThunk(
   "habit/updateCompleteDate",
   async (date, habitId, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.token;
+      const token = thunkAPI.getState().auth.user.token;
       return await habitService.updateHabitCompleteDate(date, habitId, token);
     } catch (error) {
       const message =
@@ -85,7 +85,7 @@ export const deleteHabit = createAsyncThunk(
   "habit/delete",
   async (habitId, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.token;
+      const token = thunkAPI.getState().auth.user.token;
       return await habitService.deleteHabit(habitId, token);
     } catch (error) {
       const message =
