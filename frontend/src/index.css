@@ -55,7 +55,6 @@
 
 .habit-new-btn {
   display: flex;
-  justify-content: center;
   margin: 1rem 0 1rem 0;
 }
 
@@ -63,6 +62,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  min-width: 200px;
 }
 
 .habit-week-group {
@@ -72,8 +72,10 @@
 
 .habit-card-group {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  gap: 1rem;
 }
 
 .week-square {
@@ -125,6 +127,63 @@
   display: flex;
   justify-content: space-between;
   margin: 1rem 0 0 0;
+}
+
+/* Stat Page */
+.stat-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.stat-content {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 800px;
+}
+
+.stat-topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.stat-btn {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.first-stat {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.current-streak {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  min-height: 175px;
+}
+
+.longest-streak {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  min-height: 175px;
+}
+
+.completion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  max-height: 175px;
 }
 
 @media (max-width: 420px) {

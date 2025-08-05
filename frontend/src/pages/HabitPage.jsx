@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getHabit, reset } from "../features/habits/habitSlice";
 import HeaderBar from "../components/HeaderBar";
 import Habit from "../components/Habit";
+import { Spinner } from "@radix-ui/themes";
 
 const Week = Object.freeze({
   SUNDAY: 0,
@@ -40,7 +41,17 @@ export default function HabitPage() {
     return () => {
       dispatch(reset());
     };
-  }, [user, navigate, isError, message, dispatch]);
+  }, [user, isError, message, navigate, dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className="auth-page">
+        <div className="main-content">
+          <Spinner size="3" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="habit-page">
@@ -61,7 +72,11 @@ export default function HabitPage() {
         <div className="habit-card-group">
           {habits.length > 0 ? (
             habits.map((habit) => (
-              <Habit key={habit._id} title={habit.title}></Habit>
+              <Habit
+                key={habit._id}
+                title={habit.title}
+                habitId={habit._id}
+              ></Habit>
             ))
           ) : (
             <p>No Habit</p>

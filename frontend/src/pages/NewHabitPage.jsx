@@ -28,6 +28,10 @@ export default function NewHabitPage() {
     if (isSuccess && formData.title !== "") {
       navigate("/habit");
     }
+
+    return () => {
+      dispatch(reset());
+    };
   }, [isError, isSuccess, message, navigate, dispatch]);
 
   function handleChange(e) {
