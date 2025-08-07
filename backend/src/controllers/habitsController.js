@@ -125,6 +125,33 @@ export async function updateHabitCompleteDate(req, res) {
 }
 
 /**
+ * @description Update the habit streak status
+ * @route PUT api/habits/streak/:id
+ * @access Private
+ */
+export async function updateHabitStreak(req, res) {
+  try {
+    const { streak } = req.body;
+
+    checkAuth(req, await Habit.findById(req.params.id));
+
+    const updateHabit = await Habit.findByIdAndUpdate(
+      req.params.id,
+      { streak },
+      { new: true }
+    );
+
+    if (!updateHabit) {
+      return res.status(404).json({ message: "Habit not found" });
+    }
+    res.status(200).json(updateHabit);
+  } catch (error) {
+    console.error("Error in updateHabitStreak", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+/**
  * @description Delete the habit
  * @route DELETE api/habits/delete/:id
  * @access Private
