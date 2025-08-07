@@ -4,7 +4,12 @@ import { Text, Spinner, IconButton, Button, Card, Box } from "@radix-ui/themes";
 import HeaderBar from "../components/HeaderBar";
 import { differenceInCalendarDays, formatISO } from "date-fns";
 import { data, useNavigate, useParams } from "react-router";
-import { getHabit, deleteHabit, reset } from "../features/habits/habitSlice";
+import {
+  getHabit,
+  updateHabitStreak,
+  deleteHabit,
+  reset,
+} from "../features/habits/habitSlice";
 import CalHeatmap from "cal-heatmap";
 import Tooltip from "cal-heatmap/plugins/Tooltip";
 import "cal-heatmap/cal-heatmap.css";
@@ -25,6 +30,7 @@ export default function StatPage() {
   const [habitData, setHabitData] = useState({
     title: "",
     start_date: "",
+    streak: 0,
     completed_dates: [],
   });
 
@@ -67,7 +73,6 @@ export default function StatPage() {
 
   // Calculate Current Streak and completion rate
   useEffect(() => {
-    console.log(habitData);
     if (habitData.title === "" || habitData.completed_dates.length === 0)
       return;
 
@@ -96,6 +101,18 @@ export default function StatPage() {
 
     setCurrentStreak(counter);
   }, [habitData]);
+
+  // Longest Streak
+  useEffect(() => {
+    console.log(habitData);
+    if (habitData.title === "") return;
+
+    const greatest = Math.max(currentStreak, habitData.streak);
+    setLongestStreak(greatest);
+
+    const updateData = { streak: greatest, id: habitId };
+    dispatch(updateHabitStreak(updateData));
+  }, [habitData.streak, currentStreak]);
 
   // Completion Rate
   useEffect(() => {
