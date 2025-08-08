@@ -47,15 +47,13 @@ export default function StatPage() {
   );
 
   useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
-
     if (!user) {
       navigate("/login");
     }
 
-    dispatch(getHabit());
+    if (isError) {
+      console.log(message);
+    }
 
     return () => {
       dispatch(reset());
