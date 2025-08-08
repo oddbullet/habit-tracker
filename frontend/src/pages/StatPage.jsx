@@ -74,35 +74,33 @@ export default function StatPage() {
     if (habitData.title === "" || habitData.completed_dates.length === 0)
       return;
 
-    let counter = 0;
+    const today = formatISO(new Date(), { representation: "date" });
+    const size = habitData.completed_dates.length;
 
     if (
-      differenceInCalendarDays(
-        habitData.completed_dates[habitData.completed_dates.length - 1],
-        formatISO(new Date(), { representation: "date" })
-      ) <= 1
+      differenceInCalendarDays(today, habitData.completed_dates[size - 1]) > 1
     ) {
-      counter += 1;
-    }
+      setCurrentStreak(0);
+    } else {
+      let counter = 1;
 
-    for (let i = habitData.completed_dates.length - 1; i >= 0; i--) {
-      const secondDate = habitData.completed_dates[i - 1]
-        ? habitData.completed_dates[i - 1]
-        : null;
-      if (
-        secondDate &&
-        differenceInCalendarDays(habitData.completed_dates[i], secondDate) === 1
-      ) {
-        counter += 1;
+      for (let i = size - 2; i >= 0; i--) {
+        const prevDate = habitData.completed_dates[i + 1];
+        const currDate = habitData.completed_dates[i];
+
+        if (differenceInCalendarDays(prevDate, currDate) === 1) {
+          counter += 1;
+        } else {
+          break;
+        }
       }
-    }
 
-    setCurrentStreak(counter);
+      setCurrentStreak(counter);
+    }
   }, [habitData]);
 
   // Longest Streak
   useEffect(() => {
-    console.log(habitData);
     if (habitData.title === "") return;
 
     const greatest = Math.max(currentStreak, habitData.streak);
@@ -123,8 +121,6 @@ export default function StatPage() {
       100
     ).toFixed(2);
     setCompletionPercent(percent);
-
-    console.log(percent);
   }, [habitData]);
 
   // Heatmap
