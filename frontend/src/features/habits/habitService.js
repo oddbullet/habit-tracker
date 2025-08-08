@@ -58,6 +58,22 @@ async function updateHabitCompleteDate(newDate, habitId, token) {
   return response.data;
 }
 
+async function updateHabitStreak(newStreak, habitId, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await api.put(
+    API_URL + "stat/" + habitId,
+    { streak: newStreak },
+    config
+  );
+
+  return response.data;
+}
+
 async function deleteHabit(habitId, token) {
   const config = {
     headers: {
@@ -75,6 +91,7 @@ const habitService = {
   createHabit,
   updateHabitTitle,
   updateHabitCompleteDate,
+  updateHabitStreak,
   deleteHabit,
 };
 
