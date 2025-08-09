@@ -4,7 +4,12 @@ import { Text, Spinner, IconButton, Button, Card, Box } from "@radix-ui/themes";
 import HeaderBar from "../components/HeaderBar";
 import { differenceInCalendarDays, formatISO } from "date-fns";
 import { data, useNavigate, useParams } from "react-router";
-import { getHabit, deleteHabit, reset } from "../features/habits/habitSlice";
+import {
+  getHabit,
+  updateHabitStreak,
+  deleteHabit,
+  reset,
+} from "../features/habits/habitSlice";
 import CalHeatmap from "cal-heatmap";
 import Tooltip from "cal-heatmap/plugins/Tooltip";
 import "cal-heatmap/cal-heatmap.css";
@@ -25,6 +30,7 @@ export default function StatPage() {
   const [habitData, setHabitData] = useState({
     title: "",
     start_date: "",
+    streak: 0,
     completed_dates: [],
   });
 
@@ -41,15 +47,13 @@ export default function StatPage() {
   );
 
   useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
-
     if (!user) {
       navigate("/login");
     }
 
-    dispatch(getHabit());
+    if (isError) {
+      console.log(message);
+    }
 
     return () => {
       dispatch(reset());
@@ -67,35 +71,44 @@ export default function StatPage() {
 
   // Calculate Current Streak and completion rate
   useEffect(() => {
-    console.log(habitData);
     if (habitData.title === "" || habitData.completed_dates.length === 0)
       return;
 
-    let counter = 0;
+    const today = formatISO(new Date(), { representation: "date" });
+    const size = habitData.completed_dates.length;
 
     if (
-      differenceInCalendarDays(
-        habitData.completed_dates[habitData.completed_dates.length - 1],
-        formatISO(new Date(), { representation: "date" })
-      ) <= 1
+      differenceInCalendarDays(today, habitData.completed_dates[size - 1]) > 1
     ) {
-      counter += 1;
-    }
+      setCurrentStreak(0);
+    } else {
+      let counter = 1;
 
-    for (let i = habitData.completed_dates.length - 1; i >= 0; i--) {
-      const secondDate = habitData.completed_dates[i - 1]
-        ? habitData.completed_dates[i - 1]
-        : null;
-      if (
-        secondDate &&
-        differenceInCalendarDays(habitData.completed_dates[i], secondDate) === 1
-      ) {
-        counter += 1;
+      for (let i = size - 2; i >= 0; i--) {
+        const prevDate = habitData.completed_dates[i + 1];
+        const currDate = habitData.completed_dates[i];
+
+        if (differenceInCalendarDays(prevDate, currDate) === 1) {
+          counter += 1;
+        } else {
+          break;
+        }
       }
-    }
 
-    setCurrentStreak(counter);
+      setCurrentStreak(counter);
+    }
   }, [habitData]);
+
+  // Longest Streak
+  useEffect(() => {
+    if (habitData.title === "") return;
+
+    const greatest = Math.max(currentStreak, habitData.streak);
+    setLongestStreak(greatest);
+
+    const updateData = { streak: greatest, id: habitId };
+    dispatch(updateHabitStreak(updateData));
+  }, [habitData.streak, currentStreak]);
 
   // Completion Rate
   useEffect(() => {
@@ -108,8 +121,6 @@ export default function StatPage() {
       100
     ).toFixed(2);
     setCompletionPercent(percent);
-
-    console.log(percent);
   }, [habitData]);
 
   // Heatmap
