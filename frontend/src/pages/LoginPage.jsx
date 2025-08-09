@@ -28,7 +28,9 @@ export default function Login() {
       navigate("/habit");
     }
 
-    dispatch(reset());
+    return () => {
+      dispatch(reset());
+    };
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   function handleChange(e) {

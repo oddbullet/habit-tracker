@@ -6,6 +6,7 @@ import {
   updateHabitCompleteDate,
   deleteHabit,
   updateHabitStreak,
+  deleteHabitCompleteDate,
 } from "../controllers/habitsController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
@@ -16,6 +17,7 @@ router.get("/", getAllHabits);
 router.post("/", createHabit);
 router.put("/title/:id", updateHabitTitle);
 router.put("/date/:id", updateHabitCompleteDate);
+router.put("/deleteDate/:id", deleteHabitCompleteDate);
 router.put("/stat/:id", updateHabitStreak);
 router.delete("/delete/:id", deleteHabit);
 
