@@ -4,7 +4,10 @@ import { formatISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { updateHabitCompleteDate } from "../features/habits/habitSlice";
+import {
+  deleteHabitCompleteDate,
+  updateHabitCompleteDate,
+} from "../features/habits/habitSlice";
 
 export default function Habit({ title, habitId }) {
   const navigate = useNavigate();
@@ -19,7 +22,13 @@ export default function Habit({ title, habitId }) {
 
     const today = formatISO(new Date(), { representation: "date" });
     const habitData = { date: today, id: habitId };
-    dispatch(updateHabitCompleteDate(habitData));
+
+    if (clickState === "outline") {
+      dispatch(updateHabitCompleteDate(habitData));
+    } else {
+      setClickState("outline");
+      dispatch(deleteHabitCompleteDate(habitData));
+    }
   }
 
   useEffect(() => {
@@ -31,7 +40,6 @@ export default function Habit({ title, habitId }) {
         formatISO(new Date(), { representation: "date" })
     ) {
       setClickState("solid");
-      console.log(clickState);
     }
   }, [habits]);
 

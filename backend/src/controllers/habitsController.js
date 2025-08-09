@@ -125,6 +125,35 @@ export async function updateHabitCompleteDate(req, res) {
 }
 
 /**
+ * @description Delete one the habit completed dates
+ * @route PUT api/habits/deleteDate/:id
+ * @access Private
+ */
+export async function deleteHabitCompleteDate(req, res) {
+  try {
+    const { date } = req.body;
+
+    checkAuth(req, await Habit.findById(req.params.id));
+
+    const updateHabit = await Habit.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { completed_dates: date },
+      },
+      { new: true }
+    );
+
+    if (!updateHabit) {
+      return res.status(404).json({ message: "Habit not found" });
+    }
+    res.status(200).json(updateHabit);
+  } catch (error) {
+    console.error("Error in deleteHabitCompleteDate", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+/**
  * @description Update the habit streak status
  * @route PUT api/habits/streak/:id
  * @access Private
