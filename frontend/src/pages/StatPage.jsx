@@ -1,17 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, Spinner, IconButton, Button, Card, Box } from "@radix-ui/themes";
+import { Text, IconButton, Card, Box } from "@radix-ui/themes";
 import HeaderBar from "../components/HeaderBar";
 import { differenceInCalendarDays, formatISO } from "date-fns";
-import { data, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
-  getHabit,
   updateHabitStreak,
   deleteHabit,
   reset,
 } from "../features/habits/habitSlice";
 import CalHeatmap from "cal-heatmap";
-import Tooltip from "cal-heatmap/plugins/Tooltip";
 import "cal-heatmap/cal-heatmap.css";
 import { ArrowLeftIcon, TrashIcon } from "@radix-ui/react-icons";
 
@@ -20,7 +18,6 @@ import { ArrowLeftIcon, TrashIcon } from "@radix-ui/react-icons";
 
 // 2. Get the title, completed dates
 // 3. Implement change title
-// 6. Implement heatmap
 
 export default function StatPage() {
   const navigate = useNavigate();
@@ -38,7 +35,7 @@ export default function StatPage() {
   const [longestStreak, setLongestStreak] = useState(0);
 
   const [completionPercent, setCompletionPercent] = useState(0);
-  const [totalDate, setTotalDate] = useState(0);
+  const [totalDate, setTotalDate] = useState(1);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -124,7 +121,6 @@ export default function StatPage() {
   }, [habitData]);
 
   // Heatmap
-  // const cal = new CalHeatmap();
   const calRef = useRef(null);
   useEffect(() => {
     if (calRef.current) return;

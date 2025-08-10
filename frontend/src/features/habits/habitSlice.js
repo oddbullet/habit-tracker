@@ -119,6 +119,25 @@ export const updateHabitStreak = createAsyncThunk(
   }
 );
 
+// Cases not added
+export const updateHabitColor = createAsyncThunk(
+  "habit/updateColor",
+  async ({ color, id }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await habitService.updateHabitStreak(streak, id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const deleteHabit = createAsyncThunk(
   "habit/delete",
   async (habitId, thunkAPI) => {

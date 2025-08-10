@@ -92,6 +92,18 @@ async function updateHabitStreak(newStreak, habitId, token) {
   return response.data;
 }
 
+async function updateHabitColor(newColor, habitId, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await api.put(API_URL + "color/" + habitId, config);
+
+  return response.data;
+}
+
 async function deleteHabit(habitId, token) {
   const config = {
     headers: {
@@ -111,6 +123,7 @@ const habitService = {
   updateHabitCompleteDate,
   deleteHabitCompleteDate,
   updateHabitStreak,
+  updateHabitColor,
   deleteHabit,
 };
 

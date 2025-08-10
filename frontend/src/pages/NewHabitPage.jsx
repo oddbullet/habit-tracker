@@ -8,7 +8,16 @@ import { reset, createHabit } from "../features/habits/habitSlice";
 import "react-day-picker/style.css";
 
 export default function NewHabitPage() {
-  const [color, setColor] = useState("#000000");
+  const [colorPick, setColorPick] = useState("");
+
+  const colors = [
+    "var(--orange-10)",
+    "var(--red-10)",
+    "var(--indigo-10)",
+    "var(--blue-10)",
+    "var(--pink-10)",
+  ];
+
   const [formData, setFormData] = useState({
     title: "",
   });
@@ -47,12 +56,17 @@ export default function NewHabitPage() {
     }));
   }
 
+  function handleClick(color) {
+    setColorPick(color);
+  }
+
   function onSubmit(e) {
     e.preventDefault();
 
     const habitData = {
       title: formData.title,
       goal_per_week: 1,
+      color: colorPick.slice(6, -4),
     };
 
     dispatch(createHabit(habitData));
@@ -86,11 +100,19 @@ export default function NewHabitPage() {
               <Text as="p" weight="medium" size="3">
                 Habit Color
               </Text>
-              <div>
-                <div className="color-block" style={{ backgroundColor: color }}>
-                  <Text style={{ color: "white" }}>{color}</Text>
-                </div>
-                <HexColorPicker color={color} onChange={setColor} />
+
+              <div className="color-pick-group">
+                {colors.map((color) => (
+                  <button
+                    key={color}
+                    className={`circle ${
+                      colorPick === color ? "selected" : ""
+                    }`}
+                    style={{ backgroundColor: color }}
+                    onClick={() => handleClick(color)}
+                    type="button"
+                  ></button>
+                ))}
               </div>
 
               <div className="new-habit-btn">

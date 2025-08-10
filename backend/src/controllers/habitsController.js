@@ -49,7 +49,7 @@ export async function getAllHabits(req, res) {
  */
 export async function createHabit(req, res) {
   try {
-    const { title, goal_per_week } = req.body;
+    const { title, goal_per_week, color } = req.body;
     const start_date = getLocalDate();
     const habit = new Habit({
       user: req.user.id,
@@ -58,6 +58,7 @@ export async function createHabit(req, res) {
       completed_dates: [],
       streak: 0,
       goal_per_week,
+      color,
     });
 
     const savedHabit = await habit.save();
@@ -176,6 +177,34 @@ export async function updateHabitStreak(req, res) {
     res.status(200).json(updateHabit);
   } catch (error) {
     console.error("Error in updateHabitStreak", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+/**
+ * @description Update the color of the habit
+ * @route PUT api/habits/color/:id
+ * @access Private
+ */
+export async function updateHabitColor(req, res) {
+  try {
+    const { color } = req.body;
+
+    checkAuth(req, await Habit.findById(req.params.id));
+
+    const updateHabit = await Habit.findByIdAndUpdate(
+      req.params.id,
+      { color },
+      { new: true }
+    );
+
+    if (!updateHabit) {
+      return res.status(404).json({ message: "Habit not found" });
+    }
+
+    res.status(200).json(updateHabit);
+  } catch (error) {
+    console.error("Error in updateHabitColor", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
