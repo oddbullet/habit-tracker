@@ -76,6 +76,7 @@ export default function HabitPage() {
               <Habit
                 key={habit._id}
                 title={habit.title}
+                color={habit.color}
                 habitId={habit._id}
               ></Habit>
             ))

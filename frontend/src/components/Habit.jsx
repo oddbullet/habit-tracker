@@ -9,7 +9,7 @@ import {
   updateHabitCompleteDate,
 } from "../features/habits/habitSlice";
 
-export default function Habit({ title, habitId }) {
+export default function Habit({ title, color, habitId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -68,8 +68,9 @@ export default function Habit({ title, habitId }) {
           <div className="habit-btn-group">
             <IconButton
               variant={clickState}
+              color={color}
               radius="full"
-              highContrast
+              // highContrast
               onClick={handleClick}
             >
               <CheckIcon width={"20px"} height={"20px"} />
