@@ -44,15 +44,15 @@ export default function HabitPage() {
     };
   }, [user, isError, message, navigate, dispatch]);
 
-  if (isLoading) {
-    return (
-      <div className="auth-page">
-        <div className="main-content">
-          <Spinner size="3" />
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="auth-page">
+  //       <div className="main-content">
+  //         <Spinner size="3" />
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="habit-page">

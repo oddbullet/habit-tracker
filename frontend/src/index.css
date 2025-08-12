@@ -91,6 +91,7 @@
 
 .habit-week-group {
   display: flex;
+  margin-top: 0.5rem;
   gap: 2px;
 }
 
@@ -136,6 +137,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.habit-card-streak {
+  display: flex;
+  align-items: center;
 }
 
 .color-block {

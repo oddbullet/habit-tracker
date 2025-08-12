@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Card, Spinner, Text, TextField } from "@radix-ui/themes";
-import { HexColorPicker } from "react-colorful";
 import { reset, createHabit } from "../features/habits/habitSlice";
 import "react-day-picker/style.css";
 
