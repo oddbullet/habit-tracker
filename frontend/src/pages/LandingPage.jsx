@@ -2,6 +2,7 @@ import { Box, Button, Card, Text } from "@radix-ui/themes";
 import HeaderBar from "../components/HeaderBar";
 import { useNavigate } from "react-router";
 import "../index.css";
+import FooterBar from "../components/FooterBar";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ export default function LandingPage() {
           </Button>
         </div>
       </div>
+      <FooterBar />
     </div>
   );
 }
