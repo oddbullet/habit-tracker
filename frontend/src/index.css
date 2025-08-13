@@ -237,6 +237,72 @@
   max-height: 175px;
 }
 
+/* Landing Page */
+
+.landing-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.landing-main-content {
+  padding: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.landing-catch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.landing-img {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.landing-image {
+  max-width: 80%;
+  border-bottom: 1px solid var(--gray-6);
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.landing-feature {
+  display: flex;
+  gap: 2rem;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--shadow-3);
+  padding: 3rem;
+  gap: 0.3rem;
+  min-height: 280px;
+}
+
+.feature-icon {
+  font-size: 2rem;
+}
+
+.landing-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
 @media (max-width: 420px) {
   .habit-content {
     margin: 2px;
