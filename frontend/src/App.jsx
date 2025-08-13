@@ -13,10 +13,8 @@ import "./App.css";
 function App() {
   return (
     <Routes>
-      {/* <Route path="/" element={<LandingPage />}></Route> */}
+      <Route path="/" element={<LandingPage />}></Route>
       <Route path="/habit" element={<HabitPage />}></Route>
-      {/* Need to replace later with landing page */}
-      <Route path="/" element={<LoginPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/new" element={<NewHabitPage />}></Route>

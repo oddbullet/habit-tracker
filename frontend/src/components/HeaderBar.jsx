@@ -17,7 +17,7 @@ export default function HeaderBar() {
           size="6"
           style={{ padding: "0.5rem 0 0.5rem 1rem" }}
         >
-          Habits
+          Habit Today
         </Text>
 
         <button className="logout-btn" onClick={() => dispatch(logout())}>
