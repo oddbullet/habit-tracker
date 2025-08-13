@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getHabit, reset } from "../features/habits/habitSlice";
 import HeaderBar from "../components/HeaderBar";
+import FooterBar from "../components/FooterBar";
 import Habit from "../components/Habit";
 import { Spinner } from "@radix-ui/themes";
 
@@ -85,6 +86,7 @@ export default function HabitPage() {
           )}
         </div>
       </div>
+      <FooterBar />
     </div>
   );
 }
