@@ -13,12 +13,6 @@ import CalHeatmap from "cal-heatmap";
 import "cal-heatmap/cal-heatmap.css";
 import { ArrowLeftIcon, TrashIcon } from "@radix-ui/react-icons";
 
-// Change Habit Title
-// CalHeatMap
-
-// 2. Get the title, completed dates
-// 3. Implement change title
-
 export default function StatPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,8 +62,10 @@ export default function StatPage() {
 
   // Calculate Current Streak and completion rate
   useEffect(() => {
-    if (habitData.title === "" || habitData.completed_dates.length === 0)
+    if (habitData.title === "" || habitData.completed_dates.length === 0) {
+      setCurrentStreak(0);
       return;
+    }
 
     const today = formatISO(new Date(), { representation: "date" });
     const size = habitData.completed_dates.length;
@@ -96,16 +92,33 @@ export default function StatPage() {
     }
   }, [habitData]);
 
-  // Longest Streak
+  // Calculate Longest Streak
   useEffect(() => {
-    if (habitData.title === "") return;
+    if (habitData.title === "" || habitData.completed_dates.length === 0) {
+      setLongestStreak(0);
+      return;
+    }
 
-    const greatest = Math.max(currentStreak, habitData.streak);
-    setLongestStreak(greatest);
+    let maxStreak = 1;
+    let currentStreakCount = 1;
 
-    const updateData = { streak: greatest, id: habitId };
+    for (let i = 1; i < habitData.completed_dates.length; i++) {
+      const prevDate = habitData.completed_dates[i - 1];
+      const currDate = habitData.completed_dates[i];
+
+      if (differenceInCalendarDays(currDate, prevDate) === 1) {
+        currentStreakCount += 1;
+        maxStreak = Math.max(maxStreak, currentStreakCount);
+      } else {
+        currentStreakCount = 1;
+      }
+    }
+
+    setLongestStreak(maxStreak);
+
+    const updateData = { streak: maxStreak, id: habitId };
     dispatch(updateHabitStreak(updateData));
-  }, [habitData.streak, currentStreak]);
+  }, [habitData.completed_dates, habitId, dispatch]);
 
   // Completion Rate
   useEffect(() => {
