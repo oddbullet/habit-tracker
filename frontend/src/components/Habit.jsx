@@ -165,6 +165,9 @@ export default function Habit({ title, color, habitId }) {
               variant={clickState}
               color={color}
               radius="full"
+              style={{
+                backgroundColor: clickState === "solid" ? color : "transparent",
+              }}
               onClick={handleClick}
             >
               <CheckIcon width={"20px"} height={"20px"} />

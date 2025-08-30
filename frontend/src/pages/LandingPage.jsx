@@ -3,9 +3,12 @@ import HeaderBar from "../components/HeaderBar";
 import { useNavigate } from "react-router";
 import "../index.css";
 import FooterBar from "../components/FooterBar";
+import { useSelector } from "react-redux";
 
 export default function LandingPage() {
   const navigate = useNavigate();
+
+  const { theme } = useSelector((state) => state.auth);
 
   return (
     <div className="landing-page">
@@ -23,7 +26,19 @@ export default function LandingPage() {
           </Button>
         </div>
         <div className="landing-img">
-          <img src="/landImg.png" alt="Habit Page" className="landing-image" />
+          {theme === "light" ? (
+            <img
+              src="/landImg.png"
+              alt="Habit Page"
+              className="landing-image"
+            />
+          ) : (
+            <img
+              src="/darkLandImg.png"
+              alt="Habit Page"
+              className="landing-image"
+            ></img>
+          )}
         </div>
         <div className="landing-feature">
           <Box maxWidth={"300px"}>

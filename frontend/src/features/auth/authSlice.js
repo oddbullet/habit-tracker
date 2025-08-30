@@ -2,9 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
 
 const user = JSON.parse(localStorage.getItem("user"));
+const theme = JSON.parse(localStorage.getItem("theme"));
 
 export const initialState = {
   user: user ? user : "",
+  theme: theme ? theme : "light",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -59,6 +61,14 @@ export const authSlice = createSlice({
         (state.isSuccess = false),
         (state.message = "");
     },
+    lightTheme: (state) => {
+      state.theme = "light";
+      localStorage.setItem("theme", JSON.stringify("light"));
+    },
+    darkTheme: (state) => {
+      state.theme = "dark";
+      localStorage.setItem("theme", JSON.stringify("dark"));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -97,5 +107,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, lightTheme, darkTheme } = authSlice.actions;
 export default authSlice.reducer;
