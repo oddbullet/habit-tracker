@@ -224,11 +224,6 @@
 
 /* Landing Page */
 
-.landing-page {
-  width: 100vw;
-  height: 100vh;
-}
-
 .landing-main-content {
   padding: 6rem;
   display: flex;

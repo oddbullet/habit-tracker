@@ -18,11 +18,24 @@ async function login(userData) {
   return response.data;
 }
 
+async function verifyUser(token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await api.get(API_URL + "verify", config);
+
+  return response.data;
+}
+
 function logout() {
   localStorage.removeItem("user");
 }
 
 const authService = {
+  verifyUser,
   register,
   login,
   logout,

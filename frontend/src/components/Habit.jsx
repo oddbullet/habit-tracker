@@ -86,7 +86,6 @@ export default function Habit({ title, color, habitId }) {
   useEffect(() => {
     const week = [0, 0, 0, 0, 0, 0, 0];
     const habitData = habits.find((habit) => habit._id === habitId);
-    console.log(habitData);
 
     if (habitData.completed_dates.length === 0) {
       return;
