@@ -46,6 +46,7 @@ export default function Habit({ title, color, habitId }) {
   useEffect(() => {
     const habitData = habits.find((habit) => habit._id === habitId);
 
+    // If current date fill in the fire and check
     if (
       habitData &&
       habitData.completed_dates[habitData.completed_dates.length - 1] ===
@@ -56,8 +57,10 @@ export default function Habit({ title, color, habitId }) {
     }
 
     // Calculate current Streak
-    if (habitData.title === "" || habitData.completed_dates.length === 0)
+    if (habitData.title === "" || habitData.completed_dates.length === 0) {
+      setCurrentStreak(0);
       return;
+    }
 
     const today = formatISO(new Date(), { representation: "date" });
     const size = habitData.completed_dates.length;
@@ -83,12 +86,13 @@ export default function Habit({ title, color, habitId }) {
     }
   }, [habits]);
 
+  // Fill in the week row
   useEffect(() => {
     const week = [0, 0, 0, 0, 0, 0, 0];
     const habitData = habits.find((habit) => habit._id === habitId);
-    console.log(habitData);
 
     if (habitData.completed_dates.length === 0) {
+      setWeekComplete(week);
       return;
     }
 
@@ -110,7 +114,6 @@ export default function Habit({ title, color, habitId }) {
 
       week[getDay(date)] = 1;
     }
-
     setWeekComplete(week);
   }, [habits]);
 
@@ -152,7 +155,8 @@ export default function Habit({ title, color, habitId }) {
                   key={index}
                   className="week-square"
                   style={{
-                    backgroundColor: weekComplete[index] === 1 ? color : "none",
+                    backgroundColor:
+                      weekComplete[index] === 1 ? color : "transparent",
                   }}
                 >
                   <strong>{day}</strong>
@@ -165,6 +169,9 @@ export default function Habit({ title, color, habitId }) {
               variant={clickState}
               color={color}
               radius="full"
+              style={{
+                backgroundColor: clickState === "solid" ? color : "transparent",
+              }}
               onClick={handleClick}
             >
               <CheckIcon width={"20px"} height={"20px"} />

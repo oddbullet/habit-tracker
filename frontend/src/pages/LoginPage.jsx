@@ -1,9 +1,9 @@
 import { Button, Box, Card, Text, TextField, Spinner } from "@radix-ui/themes";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { Label } from "radix-ui";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { reset, login } from "../features/auth/authSlice";
+import { reset, login, verifyUser } from "../features/auth/authSlice";
 import HeaderBar from "../components/HeaderBar";
 
 export default function Login() {
@@ -32,6 +32,10 @@ export default function Login() {
       dispatch(reset());
     };
   }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  useEffect(() => {
+    dispatch(verifyUser());
+  }, []);
 
   function handleChange(e) {
     setFormData((prevState) => ({
