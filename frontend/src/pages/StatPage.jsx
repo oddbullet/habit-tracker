@@ -8,6 +8,7 @@ import {
   updateHabitStreak,
   deleteHabit,
   reset,
+  getHabit,
 } from "../features/habits/habitSlice";
 import CalHeatmap from "cal-heatmap";
 import "cal-heatmap/cal-heatmap.css";
@@ -51,12 +52,19 @@ export default function StatPage() {
     };
   }, [user, isError, message, navigate, dispatch]);
 
+  // Get habit if user reloads
+  useEffect(() => {
+    if (habits.length === 0) {
+      dispatch(getHabit());
+    }
+  }, []);
+
   useEffect(() => {
     const habit = habits.find((h) => h._id === habitId);
     if (habit) {
       setHabitData(habit);
     }
-  }, []);
+  }, [habits.length]);
 
   // Calculate Current Streak and completion rate
   useEffect(() => {
