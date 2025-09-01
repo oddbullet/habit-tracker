@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { reset, register } from "../features/auth/authSlice";
 import HeaderBar from "../components/HeaderBar";
+import ToastComponent from "../components/Toast";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,9 +20,14 @@ export default function RegisterPage() {
     (state) => state.auth
   );
 
+  const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(message);
+
   useEffect(() => {
-    if (isError) {
+    if (isError && (formData.email !== "" || formData.password !== "")) {
       console.log(message);
+      setErrorMessage(message);
+      setOpen(true);
     }
 
     if (isSuccess) {
@@ -63,6 +69,12 @@ export default function RegisterPage() {
 
   return (
     <div className="auth-page">
+      <ToastComponent
+        open={open}
+        setOpen={setOpen}
+        title={"Sign Up Error"}
+        description={errorMessage}
+      />
       <HeaderBar></HeaderBar>
       <div className="main-content">
         <Box>

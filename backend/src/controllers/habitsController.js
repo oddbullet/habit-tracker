@@ -50,6 +50,12 @@ export async function getAllHabits(req, res) {
 export async function createHabit(req, res) {
   try {
     const { title, goal_per_week, color } = req.body;
+
+    if (title === "" || color === "") {
+      res.status(400).json({ message: "Fill out all field" });
+      return;
+    }
+
     const start_date = getLocalDate();
     const habit = new Habit({
       user: req.user.id,

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Card, Spinner, Text, TextField } from "@radix-ui/themes";
 import { reset, createHabit } from "../features/habits/habitSlice";
 import "react-day-picker/style.css";
+import ToastComponent from "../components/Toast";
 
 export default function NewHabitPage() {
   const [colorPick, setColorPick] = useState("");
@@ -29,6 +30,9 @@ export default function NewHabitPage() {
     (state) => state.habit
   );
 
+  const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(message);
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -37,6 +41,8 @@ export default function NewHabitPage() {
 
     if (isError) {
       console.log(message);
+      setOpen(true);
+      setErrorMessage(message);
     }
 
     if (isSuccess && formData.title !== "") {
@@ -83,6 +89,12 @@ export default function NewHabitPage() {
 
   return (
     <div className="new-habit-page">
+      <ToastComponent
+        open={open}
+        setOpen={setOpen}
+        title={"New Habit Error"}
+        description={errorMessage}
+      ></ToastComponent>
       <HeaderBar />
       <div className="main-content">
         <Box>
