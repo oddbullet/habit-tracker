@@ -107,11 +107,24 @@ export async function updateHabitCompleteDate(req, res) {
 
     checkAuth(req, await Habit.findById(req.params.id));
 
+    await Habit.findByIdAndUpdate(req.params.id, {
+      $addToSet: { completed_dates: date },
+    });
+
     const updateHabit = await Habit.findByIdAndUpdate(
       req.params.id,
-      {
-        $addToSet: { completed_dates: date },
-      },
+      [
+        {
+          $set: {
+            completed_dates: {
+              $sortArray: {
+                input: "$completed_dates",
+                sortBy: 1,
+              },
+            },
+          },
+        },
+      ],
       { new: true }
     );
 

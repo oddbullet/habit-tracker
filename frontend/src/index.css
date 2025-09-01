@@ -166,10 +166,6 @@
 }
 
 /* Stat Page */
-.stat-page {
-  width: 100vw;
-  height: 100vh;
-}
 
 .stat-content {
   margin: 0 auto;
@@ -309,4 +305,28 @@
     text-align: center;
     gap: 0.5rem;
   }
+}
+
+/* Edit Habit Page */
+
+.editHabit-content {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 800px;
+}
+
+.pastDates {
+  margin-top: 1rem;
+}
+
+.past-date-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.past-date-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

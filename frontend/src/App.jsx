@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NewHabitPage from "./pages/NewHabitPage";
 import StatPage from "./pages/StatPage";
+import EditHabitPage from "./pages/EditHabitPage";
 
 import "./App.css";
 
@@ -19,6 +20,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/new" element={<NewHabitPage />}></Route>
       <Route path="/stat/:habitId" element={<StatPage />}></Route>
+      <Route path="/editHabit/:habitId" element={<EditHabitPage />}></Route>
     </Routes>
   );
 }
