@@ -11,7 +11,7 @@ import {
 } from "../features/habits/habitSlice";
 import CalHeatmap from "cal-heatmap";
 import "cal-heatmap/cal-heatmap.css";
-import { ArrowLeftIcon, TrashIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 
 export default function StatPage() {
   const navigate = useNavigate();
@@ -52,13 +52,11 @@ export default function StatPage() {
   }, [user, isError, message, navigate, dispatch]);
 
   useEffect(() => {
-    if (habits.length <= 0) return;
-
     const habit = habits.find((h) => h._id === habitId);
     if (habit) {
       setHabitData(habit);
     }
-  }, [habits]);
+  }, []);
 
   // Calculate Current Streak and completion rate
   useEffect(() => {
@@ -124,10 +122,14 @@ export default function StatPage() {
   useEffect(() => {
     if (habitData.start_date === "") return;
 
-    setTotalDate(differenceInCalendarDays(new Date(), habitData.start_date));
+    const calculatedTotalDate = differenceInCalendarDays(
+      new Date(),
+      habitData.start_date
+    );
+    setTotalDate(calculatedTotalDate);
 
     const percent = (
-      (habitData.completed_dates.length / totalDate) *
+      (habitData.completed_dates.length / calculatedTotalDate) *
       100
     ).toFixed(2);
     setCompletionPercent(percent);
@@ -198,15 +200,21 @@ export default function StatPage() {
             </Text>
           </div>
           <div className="stat-btn">
+            <IconButton
+              color="grass"
+              onClick={() => navigate(`/editHabit/${habitId}`)}
+            >
+              <Pencil2Icon width={20} />
+            </IconButton>
             <IconButton color="red" onClick={handleDelete}>
-              <TrashIcon width={20} height={20} />
+              <TrashIcon width={20} />
             </IconButton>
             <IconButton
               color="gray"
               highContrast
               onClick={() => navigate("/habit")}
             >
-              <ArrowLeftIcon width={20} height={20} />
+              <ArrowLeftIcon width={20} />
             </IconButton>
           </div>
         </div>
