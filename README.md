@@ -1,5 +1,5 @@
 # Habit Tracker
-A MERN stack habit tracking app designed to make building and managing habits simple.
+Habit Tracker is a full-stack web application designed to help users build and maintain habits. The app allows users to create, track, and analyze their daily habits.
 
 # Built With
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)  
