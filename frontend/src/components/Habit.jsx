@@ -174,7 +174,7 @@ export default function Habit({ title, color, habitId }) {
               }}
               onClick={handleClick}
             >
-              <CheckIcon width={"20px"} height={"20px"} />
+              <CheckIcon width={"20px"} />
             </IconButton>
           </div>
         </div>

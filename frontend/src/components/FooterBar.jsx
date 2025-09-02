@@ -6,7 +6,7 @@ export default function FooterBar() {
       <Separator size="4" />
       <div className="footer-content">
         <Text size="2" color="gray">
-          V1.0.1
+          V1.1.1
         </Text>
         <Link href="https://github.com/oddbullet/habit-tracker" target="_blank">
           GitHub Repository
