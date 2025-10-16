@@ -9,16 +9,6 @@ import FooterBar from "../components/FooterBar";
 import Habit from "../components/Habit";
 import { Spinner } from "@radix-ui/themes";
 
-const Week = Object.freeze({
-  SUNDAY: 0,
-  MONDAY: 1,
-  TUESDAY: 2,
-  WEDNESDAY: 3,
-  THURSDAY: 4,
-  FRIDAY: 5,
-  SATURDAY: 6,
-});
-
 export default function HabitPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,6 +29,8 @@ export default function HabitPage() {
     }
 
     dispatch(getHabit());
+
+    console.log(habits);
 
     return () => {
       dispatch(reset());

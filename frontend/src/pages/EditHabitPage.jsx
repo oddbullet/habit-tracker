@@ -1,23 +1,27 @@
-import { Box, Card, IconButton, Text } from "@radix-ui/themes";
+import { Box, Card, IconButton, Text, TextField } from "@radix-ui/themes";
 import HeaderBar from "../components/HeaderBar";
 import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { eachDayOfInterval, format, formatISO } from "date-fns";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, CheckIcon } from "@radix-ui/react-icons";
 import {
   deleteHabitCompleteDate,
   updateHabitCompleteDate,
+  reset,
+  updateHabitTitle,
 } from "../features/habits/habitSlice";
 
 export default function EditHabitPage() {
   const { habitId } = useParams();
+
   const [habitData, setHabitData] = useState({
     title: "",
     start_date: "",
     streak: 0,
     completed_dates: [],
   });
+  const [newTitle, setNewTitle] = useState("");
   const [intervalDates, setIntervalDates] = useState([]);
 
   const dispatch = useDispatch();
@@ -30,7 +34,12 @@ export default function EditHabitPage() {
 
     if (habit) {
       setHabitData(habit);
+      setNewTitle(habit.title);
     }
+
+    return () => {
+      dispatch(reset());
+    };
   }, [habits]);
 
   useEffect(() => {
@@ -58,11 +67,41 @@ export default function EditHabitPage() {
     }
   }
 
+  function saveTitle() {
+    const config = {
+      title: newTitle,
+      id: habitId,
+    };
+
+    if (config.title !== "" && config.title !== habitData.title) {
+      dispatch(updateHabitTitle(config));
+    }
+  }
+
   return (
     <div className="editHabit-page">
       <HeaderBar></HeaderBar>
       <div className="editHabit-content">
         <div className="pastDates">
+          <div className="edit-btn">
+            <IconButton
+              color="gray"
+              highContrast
+              onClick={() => navigate("/habit")}
+            >
+              <ArrowLeftIcon width={20} />
+            </IconButton>
+          </div>
+          <Text as="p" size="6" weight="bold">
+            Habit Name
+          </Text>
+
+          <TextField.Root
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            onBlur={saveTitle}
+          ></TextField.Root>
+
           <Text as="p" size="6" weight="bold">
             Past Dates
           </Text>

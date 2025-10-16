@@ -35,7 +35,7 @@ async function updateHabitTitle(newTitle, habitId, token) {
 
   const response = await api.put(
     API_URL + "title/" + habitId,
-    newTitle,
+    { title: newTitle },
     config
   );
 

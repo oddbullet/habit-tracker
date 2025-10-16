@@ -4,8 +4,10 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Card, Spinner, Text, TextField } from "@radix-ui/themes";
 import { reset, createHabit } from "../features/habits/habitSlice";
-import "react-day-picker/style.css";
 import ToastComponent from "../components/Toast";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
+import { compareAsc, format } from "date-fns";
 
 export default function NewHabitPage() {
   const [colorPick, setColorPick] = useState("");
@@ -21,6 +23,8 @@ export default function NewHabitPage() {
   const [formData, setFormData] = useState({
     title: "",
   });
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,8 +72,15 @@ export default function NewHabitPage() {
   function onSubmit(e) {
     e.preventDefault();
 
+    if (compareAsc(selectedDate, new Date()) === 1) {
+      setOpen(true);
+      setErrorMessage("Select a current or past date.");
+      return;
+    }
+
     const habitData = {
       title: formData.title,
+      start_date: format(new Date(selectedDate), "yyyy-MM-dd"),
       goal_per_week: 1,
       color: colorPick.slice(6, -4),
     };
@@ -108,6 +119,12 @@ export default function NewHabitPage() {
                 name="title"
                 onChange={handleChange}
               ></TextField.Root>
+              <DayPicker
+                animate
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+              />
               <Text as="p" weight="medium" size="3">
                 Habit Color
               </Text>

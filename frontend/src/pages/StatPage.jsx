@@ -12,6 +12,7 @@ import {
 } from "../features/habits/habitSlice";
 import CalHeatmap from "cal-heatmap";
 import "cal-heatmap/cal-heatmap.css";
+import Tooltip from "cal-heatmap/plugins/Tooltip";
 import { ArrowLeftIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 
 export default function StatPage() {
@@ -149,27 +150,39 @@ export default function StatPage() {
     if (calRef.current) return;
 
     calRef.current = new CalHeatmap();
-    calRef.current.paint({
-      data: { source: [], x: "date", y: "value" },
-      date: { start: new Date(new Date().getFullYear(), 0, 1) },
-      range: 12,
-      scale: {
-        color: { type: "linear", range: ["#37a446"], domain: [0, 1] },
+    calRef.current.paint(
+      {
+        data: { source: [], x: "date", y: "value" },
+        date: { start: new Date(new Date().getFullYear(), 0, 1) },
+        range: 12,
+        scale: {
+          color: { type: "linear", range: ["#37a446"], domain: [0, 1] },
+        },
+        domain: {
+          type: "month",
+          gutter: 4,
+          label: { text: "MMM", textAlign: "start", position: "top" },
+        },
+        subDomain: {
+          type: "ghDay",
+          radius: 2,
+          width: 11,
+          height: 11,
+          gutter: 4,
+        },
+        itemSelector: "#cal-heatmap",
       },
-      domain: {
-        type: "month",
-        gutter: 4,
-        label: { text: "MMM", textAlign: "start", position: "top" },
-      },
-      subDomain: {
-        type: "ghDay",
-        radius: 2,
-        width: 11,
-        height: 11,
-        gutter: 4,
-      },
-      itemSelector: "#cal-heatmap",
-    });
+      [
+        [
+          Tooltip,
+          {
+            text: function (date, value, dayjsDate) {
+              return dayjsDate.format("dddd, MMMM D, YYYY");
+            },
+          },
+        ],
+      ]
+    );
 
     return () => {
       calRef.current.destroy();
