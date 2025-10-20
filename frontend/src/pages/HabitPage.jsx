@@ -7,7 +7,6 @@ import { getHabit, reset } from "../features/habits/habitSlice";
 import HeaderBar from "../components/HeaderBar";
 import FooterBar from "../components/FooterBar";
 import Habit from "../components/Habit";
-import { Spinner } from "@radix-ui/themes";
 
 export default function HabitPage() {
   const navigate = useNavigate();
@@ -19,11 +18,6 @@ export default function HabitPage() {
   );
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
     if (isError) {
       console.log(message);
     }
@@ -36,16 +30,6 @@ export default function HabitPage() {
       dispatch(reset());
     };
   }, [user, isError, message, navigate, dispatch]);
-
-  // if (isLoading) {
-  //   return (
-  //     <div className="auth-page">
-  //       <div className="main-content">
-  //         <Spinner size="3" />
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="habit-page">

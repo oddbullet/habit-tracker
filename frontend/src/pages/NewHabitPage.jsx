@@ -38,11 +38,6 @@ export default function NewHabitPage() {
   const [errorMessage, setErrorMessage] = useState(message);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
     if (isError) {
       console.log(message);
       setOpen(true);

@@ -40,10 +40,6 @@ export default function StatPage() {
   );
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-
     if (isError) {
       console.log(message);
     }
