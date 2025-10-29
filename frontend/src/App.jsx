@@ -56,6 +56,15 @@ function App() {
           </PrivateRoute>
         }
       ></Route>
+
+      {/* Demo Routes */}
+      <Route path="/demo/habit" element={<HabitPage />}></Route>
+      <Route path="/demo/new" element={<NewHabitPage />}></Route>
+      <Route path="/demo/stat/:habitId" element={<StatPage />}></Route>
+      <Route
+        path="/demo/editHabit/:habitId"
+        element={<EditHabitPage />}
+      ></Route>
     </Routes>
   );
 }
