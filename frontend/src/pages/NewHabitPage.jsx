@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Card, Spinner, Text, TextField } from "@radix-ui/themes";
-import { reset, createHabit } from "../features/habits/habitSlice";
 import ToastComponent from "../components/Toast";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { compareAsc, format } from "date-fns";
+import useHabitActions from "../hooks/useHabitActions";
+import { useHabitData } from "../hooks/useHabitData";
 
 export default function NewHabitPage() {
   const [colorPick, setColorPick] = useState("");
@@ -29,10 +30,9 @@ export default function NewHabitPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.habit
-  );
+  const { createHabit, reset } = useHabitActions();
+
+  const { isDemo, isLoading, isError, isSuccess, message } = useHabitData();
 
   const [open, setOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(message);
@@ -45,11 +45,15 @@ export default function NewHabitPage() {
     }
 
     if (isSuccess && formData.title !== "") {
-      navigate("/habit");
+      if (isDemo) {
+        navigate("/demo/habit");
+      } else {
+        navigate("/habit");
+      }
     }
 
     return () => {
-      dispatch(reset());
+      reset();
     };
   }, [isError, isSuccess, message, navigate, dispatch]);
 
@@ -64,6 +68,14 @@ export default function NewHabitPage() {
     setColorPick(color);
   }
 
+  function handleCancel() {
+    if (isDemo) {
+      navigate("/demo/habit");
+    } else {
+      navigate("/habit");
+    }
+  }
+
   function onSubmit(e) {
     e.preventDefault();
 
@@ -76,11 +88,13 @@ export default function NewHabitPage() {
     const habitData = {
       title: formData.title,
       start_date: format(new Date(selectedDate), "yyyy-MM-dd"),
+      completed_dates: [],
+      streak: 0,
       goal_per_week: 1,
       color: colorPick.slice(6, -4),
     };
 
-    dispatch(createHabit(habitData));
+    createHabit(habitData);
   }
 
   if (isLoading) {
@@ -144,7 +158,7 @@ export default function NewHabitPage() {
                   variant="outline"
                   highContrast
                   type="reset"
-                  onClick={() => navigate("/habit")}
+                  onClick={handleCancel}
                 >
                   Cancel
                 </Button>

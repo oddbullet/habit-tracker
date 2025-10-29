@@ -4,12 +4,9 @@ import { Text, IconButton, Card, Box } from "@radix-ui/themes";
 import HeaderBar from "../components/HeaderBar";
 import { differenceInCalendarDays, formatISO } from "date-fns";
 import { useNavigate, useParams } from "react-router";
-import {
-  updateHabitStreak,
-  deleteHabit,
-  reset,
-  getHabit,
-} from "../features/habits/habitSlice";
+import { getHabit, updateHabitStreak } from "../features/habits/habitSlice";
+import useHabitAction from "../hooks/useHabitActions";
+import { useHabitData } from "../hooks/useHabitData";
 import CalHeatmap from "cal-heatmap";
 import "cal-heatmap/cal-heatmap.css";
 import Tooltip from "cal-heatmap/plugins/Tooltip";
@@ -18,6 +15,8 @@ import { ArrowLeftIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 export default function StatPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { deleteHabit, reset } = useHabitAction();
 
   const { habitId } = useParams();
   const [habitData, setHabitData] = useState({
@@ -35,9 +34,7 @@ export default function StatPage() {
 
   const { user } = useSelector((state) => state.auth);
 
-  const { habits, isLoading, isError, message } = useSelector(
-    (state) => state.habit
-  );
+  const { habits, isDemo, isLoading, isError, message } = useHabitData();
 
   useEffect(() => {
     if (isError) {
@@ -45,13 +42,13 @@ export default function StatPage() {
     }
 
     return () => {
-      dispatch(reset());
+      reset();
     };
   }, [user, isError, message, navigate, dispatch]);
 
   // Get habit if user reloads
   useEffect(() => {
-    if (habits.length === 0) {
+    if (habits.length === 0 && !isDemo) {
       dispatch(getHabit());
     }
   }, []);
@@ -120,7 +117,10 @@ export default function StatPage() {
     setLongestStreak(maxStreak);
 
     const updateData = { streak: maxStreak, id: habitId };
-    dispatch(updateHabitStreak(updateData));
+
+    if (!isDemo) {
+      dispatch(updateHabitStreak(updateData));
+    }
   }, [habitData.completed_dates, habitId, dispatch]);
 
   // Completion Rate
@@ -201,9 +201,22 @@ export default function StatPage() {
   }, [habitData]);
 
   function handleDelete() {
-    dispatch(deleteHabit(habitId)).then(() => {
-      navigate("/habit");
-    });
+    if (isDemo) {
+      deleteHabit(habitId);
+      navigate("/demo/habit");
+    } else {
+      deleteHabit(habitId);
+    }
+  }
+
+  function handleBack() {
+    isDemo ? navigate("/demo/habit") : navigate("/habit");
+  }
+
+  function handleEdit() {
+    isDemo
+      ? navigate(`/demo/editHabit/${habitId}`)
+      : navigate(`/editHabit/${habitId}`);
   }
 
   return (
@@ -217,20 +230,13 @@ export default function StatPage() {
             </Text>
           </div>
           <div className="stat-btn">
-            <IconButton
-              color="grass"
-              onClick={() => navigate(`/editHabit/${habitId}`)}
-            >
+            <IconButton color="grass" onClick={handleEdit}>
               <Pencil2Icon width={20} />
             </IconButton>
             <IconButton color="red" onClick={handleDelete}>
               <TrashIcon width={20} />
             </IconButton>
-            <IconButton
-              color="gray"
-              highContrast
-              onClick={() => navigate("/habit")}
-            >
+            <IconButton color="gray" highContrast onClick={handleBack}>
               <ArrowLeftIcon width={20} />
             </IconButton>
           </div>

@@ -21,9 +21,29 @@ export default function LandingPage() {
           <Text as="p" size="5">
             Build lasting habits with Habit Today
           </Text>
-          <Button color="gray" highContrast onClick={() => navigate("/login")}>
-            Get Started for Free
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.3rem",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              color="gray"
+              highContrast
+              onClick={() => navigate("/login")}
+            >
+              Get Started for Free
+            </Button>
+            <Button
+              color="gray"
+              highContrast
+              onClick={() => navigate("/demo/habit")}
+            >
+              Demo
+            </Button>
+          </div>
         </div>
         <div className="landing-img">
           {theme === "light" ? (

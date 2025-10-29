@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import {
   createDemoHabit,
   deleteDemoHabit,
@@ -18,6 +18,8 @@ import {
 } from "../features/habits/habitSlice";
 
 function useHabitActions() {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const dispatch = useDispatch();
   const isDemo = location.pathname.includes("/demo");
@@ -49,7 +51,7 @@ function useHabitActions() {
       if (isDemo) {
         dispatch(deleteDemoHabit(id));
       } else {
-        dispatch(deleteHabit(id));
+        dispatch(deleteHabit(id)).then(() => navigate("/habit"));
       }
     },
     createHabit: (habitData) => {

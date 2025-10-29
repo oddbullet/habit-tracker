@@ -49,7 +49,8 @@ export async function getAllHabits(req, res) {
  */
 export async function createHabit(req, res) {
   try {
-    const { title, start_date, goal_per_week, color } = req.body;
+    const { title, start_date, completed_dates, streak, goal_per_week, color } =
+      req.body;
 
     if (title === "" || color === "") {
       res.status(400).json({ message: "Fill out all field" });
@@ -60,8 +61,8 @@ export async function createHabit(req, res) {
       user: req.user.id,
       title,
       start_date,
-      completed_dates: [],
-      streak: 0,
+      completed_dates,
+      streak,
       goal_per_week,
       color,
     });

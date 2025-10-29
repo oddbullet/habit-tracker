@@ -8,9 +8,10 @@ import { ArrowLeftIcon, CheckIcon } from "@radix-ui/react-icons";
 import {
   deleteHabitCompleteDate,
   updateHabitCompleteDate,
-  reset,
   updateHabitTitle,
 } from "../features/habits/habitSlice";
+import { useHabitData } from "../hooks/useHabitData";
+import useHabitActions from "../hooks/useHabitActions";
 
 export default function EditHabitPage() {
   const { habitId } = useParams();
@@ -24,10 +25,12 @@ export default function EditHabitPage() {
   const [newTitle, setNewTitle] = useState("");
   const [intervalDates, setIntervalDates] = useState([]);
 
-  const dispatch = useDispatch();
+  const { updateCompleteDate, deleteCompleteDate, updateTitle, reset } =
+    useHabitActions();
+
   const navigate = useNavigate();
 
-  const { habits } = useSelector((state) => state.habit);
+  const { habits, isDemo } = useHabitData();
 
   useEffect(() => {
     const habit = habits.find((h) => h._id === habitId);
@@ -38,7 +41,7 @@ export default function EditHabitPage() {
     }
 
     return () => {
-      dispatch(reset());
+      reset();
     };
   }, [habits]);
 
@@ -61,9 +64,9 @@ export default function EditHabitPage() {
     };
 
     if (habitData.completed_dates.includes(fd)) {
-      dispatch(deleteHabitCompleteDate(configData));
+      deleteCompleteDate(configData);
     } else {
-      dispatch(updateHabitCompleteDate(configData));
+      updateCompleteDate(configData);
     }
   }
 
@@ -74,8 +77,12 @@ export default function EditHabitPage() {
     };
 
     if (config.title !== "" && config.title !== habitData.title) {
-      dispatch(updateHabitTitle(config));
+      updateTitle(config);
     }
+  }
+
+  function handleBack() {
+    isDemo ? navigate("/demo/habit") : navigate("/habit");
   }
 
   return (
@@ -84,11 +91,7 @@ export default function EditHabitPage() {
       <div className="editHabit-content">
         <div className="pastDates">
           <div className="edit-btn">
-            <IconButton
-              color="gray"
-              highContrast
-              onClick={() => navigate("/habit")}
-            >
+            <IconButton color="gray" highContrast onClick={handleBack}>
               <ArrowLeftIcon width={20} />
             </IconButton>
           </div>
