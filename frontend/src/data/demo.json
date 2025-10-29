@@ -1,0 +1,40 @@
+[
+  {
+    "_id": "demo1",
+    "user": "demoUser",
+    "title": "Morning Workout",
+    "streak": 3,
+    "color": "blue",
+    "completed_dates": ["2025-10-14", "2025-10-15", "2025-10-20"],
+    "goal_per_week": 5,
+    "start_date": "2025-10-01"
+  },
+  {
+    "_id": "demo2",
+    "user": "demoUser",
+    "title": "Read for 30 mins",
+    "streak": 1,
+    "color": "indigo",
+    "completed_dates": ["2025-10-10", "2025-10-11", "2025-10-13", "2025-10-16"],
+    "goal_per_week": 4,
+    "start_date": "2025-09-15"
+  },
+  {
+    "_id": "demo3",
+    "user": "demoUser",
+    "title": "Drink 8 glasses of water",
+    "streak": 7,
+    "color": "red",
+    "completed_dates": [
+      "2025-10-10",
+      "2025-10-11",
+      "2025-10-12",
+      "2025-10-13",
+      "2025-10-14",
+      "2025-10-15",
+      "2025-10-16"
+    ],
+    "goal_per_week": 7,
+    "start_date": "2025-10-10"
+  }
+]

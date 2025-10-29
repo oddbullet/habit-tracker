@@ -3,57 +3,44 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getHabit, reset } from "../features/habits/habitSlice";
+import { getHabit } from "../features/habits/habitSlice";
+import { useHabitData } from "../hooks/useHabitData";
+import useHabitActions from "../hooks/useHabitActions";
 import HeaderBar from "../components/HeaderBar";
 import FooterBar from "../components/FooterBar";
 import Habit from "../components/Habit";
-import { Spinner } from "@radix-ui/themes";
-
-const Week = Object.freeze({
-  SUNDAY: 0,
-  MONDAY: 1,
-  TUESDAY: 2,
-  WEDNESDAY: 3,
-  THURSDAY: 4,
-  FRIDAY: 5,
-  SATURDAY: 6,
-});
 
 export default function HabitPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { habits, isLoading, isError, message } = useSelector(
-    (state) => state.habit
-  );
+  const { habits, isError, message, isDemo } = useHabitData();
+  const { reset } = useHabitActions();
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
     if (isError) {
       console.log(message);
     }
 
-    dispatch(getHabit());
+    if (!isDemo) {
+      dispatch(getHabit());
+    }
+
+    console.log(habits);
 
     return () => {
-      dispatch(reset());
+      reset();
     };
   }, [user, isError, message, navigate, dispatch]);
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="auth-page">
-  //       <div className="main-content">
-  //         <Spinner size="3" />
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  function handleClick() {
+    if (isDemo) {
+      navigate("/demo/new");
+    } else {
+      navigate("/new");
+    }
+  }
 
   return (
     <div className="habit-page">
@@ -65,7 +52,7 @@ export default function HabitPage() {
             variant="solid"
             highContrast
             className="btn"
-            onClick={() => navigate("/new")}
+            onClick={handleClick}
           >
             <PlusIcon /> New Habit
           </Button>

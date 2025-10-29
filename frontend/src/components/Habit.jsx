@@ -16,12 +16,16 @@ import {
   deleteHabitCompleteDate,
   updateHabitCompleteDate,
 } from "../features/habits/habitSlice";
+import { useHabitData } from "../hooks/useHabitData";
+import useHabitActions from "../hooks/useHabitActions";
 
 export default function Habit({ title, color, habitId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { habits } = useSelector((state) => state.habit);
+  // const { habits } = useSelector((state) => state.habit);
+  const { habits, isDemo } = useHabitData();
+  const { updateCompleteDate, deleteCompleteDate } = useHabitActions();
 
   const [clickState, setClickState] = useState("outline");
   const [currentStreak, setCurrentStreak] = useState(0);
@@ -35,11 +39,12 @@ export default function Habit({ title, color, habitId }) {
     const habitData = { date: today, id: habitId };
 
     if (clickState === "outline") {
-      dispatch(updateHabitCompleteDate(habitData));
+      console.log(habitData);
+      updateCompleteDate(habitData);
     } else {
       setFillFire("none");
       setClickState("outline");
-      dispatch(deleteHabitCompleteDate(habitData));
+      deleteCompleteDate(habitData);
     }
   }
 
@@ -117,12 +122,17 @@ export default function Habit({ title, color, habitId }) {
     setWeekComplete(week);
   }, [habits]);
 
+  function handleDoubleClick() {
+    if (!isDemo) {
+      navigate(`/stat/${habitId}`);
+    } else {
+      navigate(`/demo/stat/${habitId}`);
+    }
+  }
+
   return (
     <Box>
-      <Card
-        style={{ cursor: "pointer" }}
-        onDoubleClick={() => navigate(`/stat/${habitId}`)}
-      >
+      <Card style={{ cursor: "pointer" }} onDoubleClick={handleDoubleClick}>
         <div className="habit">
           <div className="habit-title">
             <div className="habit-card-streak">

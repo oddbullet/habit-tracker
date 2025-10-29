@@ -2,9 +2,11 @@ import { CheckIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
 import { Text, Separator, IconButton, DropdownMenu } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
 import { darkTheme, lightTheme, logout } from "../features/auth/authSlice";
+import { useNavigate } from "react-router";
 
 export default function HeaderBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { theme } = useSelector((state) => state.auth);
 
@@ -15,7 +17,8 @@ export default function HeaderBar() {
           as="p"
           weight="bold"
           size="6"
-          style={{ padding: "0.5rem 0 0.5rem 1rem" }}
+          style={{ padding: "0.5rem 0 0.5rem 1rem", cursor: "pointer" }}
+          onClick={() => navigate("/")}
         >
           Habit Today
         </Text>

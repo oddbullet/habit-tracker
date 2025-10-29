@@ -47,10 +47,10 @@ export const createHabit = createAsyncThunk(
 
 export const updateHabitTitle = createAsyncThunk(
   "habit/updateTitle",
-  async (title, habitId, thunkAPI) => {
+  async ({ title, id }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await habitService.updateHabitTitle(title, habitId, token);
+      return await habitService.updateHabitTitle(title, id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -285,5 +285,5 @@ export const habitSlice = createSlice({
   },
 });
 
-export const { reset } = habitSlice.actions;
+export const { reset, getDemoData } = habitSlice.actions;
 export default habitSlice.reducer;
